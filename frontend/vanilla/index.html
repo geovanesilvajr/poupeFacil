@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>PoupeFácil — Prototype</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>PoupeFácil</h1>
+    </header>
+
+    <main class="container">
+      <section class="balance-card">
+        <h2>Saldo total</h2>
+        <p id="balance">R$ 0,00</p>
+        <div class="controls">
+          <input id="amount" placeholder="R$ 0,00" />
+          <button id="btnAdd">Adicionar</button>
+          <button id="btnWithdraw">Sacar</button>
+        </div>
+      </section>
+
+      <section class="goals-section">
+        <h3>Gastos futuros</h3>
+        <ul id="goalsList"></ul>
+        <button id="btnAddGoal">+ Novo gasto</button>
+      </section>
+    </main>
+
+    <button id="fab">＋</button>
+
+    <script src="app.js"></script>
+  </body>
+</html>

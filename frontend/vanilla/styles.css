@@ -1,0 +1,36 @@
+:root{
+  --bg: #f6f8fb;
+  --card: #ffffff;
+  --accent: #2b7a78;
+  --muted: #6b7280;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:var(--bg);
+  color:#111827;
+}
+
+.app-header{
+  padding:16px;
+  background:var(--card);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+}
+.container{padding:16px; max-width:720px; margin:0 auto;}
+
+.balance-card{background:var(--card); padding:16px; border-radius:10px; margin-bottom:12px;}
+#balance{font-size:32px; margin:6px 0;}
+
+.controls{display:flex; gap:8px;}
+.controls input{flex:1; padding:8px; border-radius:8px; border:1px solid #e5e7eb;}
+
+#fab{
+  position:fixed; right:16px; bottom:16px; width:56px; height:56px;
+  border-radius:50%; background:var(--accent); color:white; border:none; font-size:28px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+@media(min-width:768px){
+  .container{padding:24px;}
+}
