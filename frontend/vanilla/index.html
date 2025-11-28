@@ -2,34 +2,89 @@
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>PoupeFácil — Prototype</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PoupeFácil — Home</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
+
   <body>
+    <!-- ================= HEADER ================= -->
     <header class="app-header">
       <h1>PoupeFácil</h1>
+
+      <button aria-label="Abrir perfil" type="button" class="btn-profile">
+        <img src="/docs/homeIcons/user.png" alt="Ícone de perfil" />
+      </button>
     </header>
 
+    <!-- ================= MAIN ================= -->
     <main class="container">
-      <section class="balance-card">
-        <h2>Saldo total</h2>
+      <!-- ===== SALDO TOTAL ===== -->
+      <section class="balance-section" aria-labelledby="balance-title">
+        <h2 id="balance-title">Saldo Total</h2>
+
         <p id="balance">R$ 0,00</p>
-        <div class="controls">
-          <input id="amount" placeholder="R$ 0,00" />
-          <button id="btnAdd">Adicionar</button>
-          <button id="btnWithdraw">Sacar</button>
-        </div>
+
+        <form class="controls" id="balanceForm">
+          <label for="amount" class="sr-only">Valor</label>
+          <input
+            id="amount"
+            name="amount"
+            placeholder="R$ 0,00"
+            inputmode="decimal"
+            autocomplete="off"
+          />
+
+          <button id="btnAdd" type="button">Adicionar</button>
+          <button id="btnWithdraw" type="button">Sacar</button>
+        </form>
       </section>
 
-      <section class="goals-section">
-        <h3>Gastos futuros</h3>
-        <ul id="goalsList"></ul>
-        <button id="btnAddGoal">+ Novo gasto</button>
+      <!-- ===== METAS ===== -->
+      <section class="goals-section" aria-labelledby="goals-title">
+        <h3 id="goals-title">Metas</h3>
+
+        <ul id="goalsList">
+          <!-- Metas serão inseridas dinamicamente via JS -->
+        </ul>
       </section>
     </main>
 
-    <button id="fab">＋</button>
+    <!-- ================= FOOTER ================= -->
+    <footer class="app-footer">
+      <nav aria-label="Menu principal">
+        <ul class="footer-menu">
+          <li>
+            <button type="button" aria-label="Página inicial">
+              <img src="/docs/homeIcons/Home icon.png" alt="Ícone home" />
+            </button>
+          </li>
+
+          <li>
+            <button type="button" aria-label="Criar meta">
+              <img src="/docs/homeIcons/Group 25.png" alt="Ícone criar meta" />
+            </button>
+          </li>
+
+          <li>
+            <button type="button" aria-label="Extrato">
+              <img src="/docs/homeIcons/wallet.png" alt="Ícone extrato" />
+            </button>
+          </li>
+
+          <li>
+            <button type="button" aria-label="Perfil">
+              <img src="/docs/homeIcons/user.png" alt="Ícone perfil" />
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="footer-info">
+        <p>© PoupeFácil</p>
+        <p>v0.1</p>
+      </div>
+    </footer>
 
     <script src="app.js"></script>
   </body>
