@@ -28,6 +28,12 @@ body {
   font-size: 32px;
 }
 
-.container {
-  display: flex;
+.goals-section {
+}
+
+#goals-list {
+  display: grid; /* Define a ul como um contêiner de grade */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  list-style: none;
 }

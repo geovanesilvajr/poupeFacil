@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adicionar Valores</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <section>
+      <h1>Saldo total</h1>
+      <form class="controls" id="balanceForm">
+        <label for="amount" class="sr-only">Valor</label>
+        <input
+          id="amount"
+          name="amount"
+          placeholder="R$ 0,00"
+          inputmode="decimal"
+          autocomplete="off"
+        />
+
+        <button id="btnAdd" type="button">Adicionar</button>
+        <button id="btnWithdraw" type="button">Sacar</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>Categorias</h2>
+      <button>Nova Categoria</button>
+      <!--Informações serão adicionadas dinâmicamente-->
+      <input type="text" placeholder="Nome da categoria" />
+      <input
+        id="amount"
+        name="amount"
+        placeholder="R$ 0,00"
+        inputmode="decimal"
+        autocomplete="off"
+      />
+      <input type="text" placeholder="% do total" />
+      <button>Salvar</button>
+    </section>
+  </body>
+</html>
