@@ -7,6 +7,8 @@
 
 * {
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 body {
   margin: 0;
@@ -14,7 +16,6 @@ body {
     "Helvetica Neue", Arial;
   background: var(--white-bg);
   color: #111827;
-  min-width: 100vh;
 }
 
 .app-header {
@@ -31,9 +32,17 @@ body {
 .goals-section {
 }
 
-#goals-list {
+.goals-list {
   display: grid; /* Define a ul como um contêiner de grade */
   grid-template-columns: repeat(3, 1fr);
   gap: 5px;
   list-style: none;
+}
+
+.goals-list li {
+  /* Estilos adicionais para os itens, como borda ou cor de fundo */
+  background-color: #f0f0f0;
+  padding: 15px;
+  text-align: center;
+  border: 1px solid #ccc;
 }

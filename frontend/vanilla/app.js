@@ -1,53 +1,45 @@
-// util de formatação simples
-function formatBRL(cents) {
-  const n = (cents / 100).toFixed(2);
-  return "R$ " + n.replace(".", ",");
+//
+
+//valor total
+//adicionar categoria, adicionar porcentagem
+//mostrar categorias salvas com a porcentagem do total e valores
+//adicionar valor - fazer a conta de quanto vai ser destinado
+//  para cada categoria com base na conta ja feita anteriomente
+
+//categoria principal com valor total de 100% - ao adicionar nova categoria diminuir porcentagem e valor desta categoria principal
+//ao adicionar
+//adicionar categoria - input adicionar categoria -
+// guardar em um array de categorias com objeto - propriedade(categoria, porcentagem e id)
+//input - adicione o valor
+//mostrar divisão do valor para cada categoria
+//guardar total em uma variavel
+//mostrar na tela o valor salvo
+//loop para somar cada valor novo
+
+//salvar input na variavel categoria pelo id
+
+const valorInicial = [
+  {
+    valor: 0,
+    categoria: "Principal",
+    porcentagem: 100,
+    id: crypto.randomUUID(),
+  },
+];
+
+const novaCategoria = [
+  {
+    valor: 0,
+    categoria: "",
+    porcentagem: 0,
+    id: crypto.randomUUID(),
+  },
+];
+
+const prompt = require("prompt-sync")();
+
+function adicionarCategoria() {
+  const categoria = prompt("Nome da categoria");
+  console.log(categoria);
 }
-
-function parseInputToCents(str) {
-  // aceita "12,34" ou "12.34" ou "1234"
-  const cleaned = str.replace(/[^\d,.-]/g, "").replace(",", ".");
-  const num = parseFloat(cleaned) || 0;
-  return Math.round(num * 100);
-}
-
-let balanceCents = 0;
-const balanceEl = document.getElementById("balance");
-const amountInput = document.getElementById("amount");
-
-function render() {
-  balanceEl.textContent = formatBRL(balanceCents);
-}
-
-document.getElementById("btnAdd").addEventListener("click", () => {
-  const cents = parseInputToCents(amountInput.value);
-  if (cents <= 0) {
-    alert("Digite um valor maior que 0");
-    return;
-  }
-  balanceCents += cents;
-  render();
-  amountInput.value = "";
-  localStorage.setItem("poupe_balance", balanceCents);
-});
-
-document.getElementById("btnWithdraw").addEventListener("click", () => {
-  const cents = parseInputToCents(amountInput.value);
-  if (cents <= 0) {
-    alert("Digite um valor maior que 0");
-    return;
-  }
-  if (cents > balanceCents) {
-    alert("Saldo insuficiente");
-    return;
-  }
-  balanceCents -= cents;
-  render();
-  amountInput.value = "";
-  localStorage.setItem("poupe_balance", balanceCents);
-});
-
-// carregar do localStorage
-const stored = parseInt(localStorage.getItem("poupe_balance"));
-if (!isNaN(stored)) balanceCents = stored;
-render();
+adicionarCategoria();
