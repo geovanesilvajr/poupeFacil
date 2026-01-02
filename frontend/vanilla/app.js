@@ -18,28 +18,40 @@
 
 //salvar input na variavel categoria pelo id
 
-const valorInicial = [
-  {
-    valor: 0,
-    categoria: "Principal",
-    porcentagem: 100,
-    id: crypto.randomUUID(),
-  },
-];
+const prompt = require("readline-sync");
+let nomeCategoria = "";
+let valorCategoria = 0;
+let porcentagem = 0;
+let categorias = [];
 
-const novaCategoria = [
-  {
-    valor: 0,
-    categoria: "",
-    porcentagem: 0,
-    id: crypto.randomUUID(),
-  },
-];
-
-const prompt = require("prompt-sync")();
+let valorTotal = [];
+let somaTotal = 0;
 
 function adicionarCategoria() {
-  const categoria = prompt("Nome da categoria");
-  console.log(categoria);
+  nomeCategoria = prompt.question("Nome categoria: \n");
+  valorCategoria = prompt.question("Digite o Valor: \n");
+  porcentagem = prompt.question("Qual é a porcentagem: \n");
+
+  let novaCategoria = {
+    valor: valorCategoria,
+    categoria: nomeCategoria,
+    porcentagem: porcentagem,
+    id: crypto.randomUUID(),
+  };
+  categorias.push(novaCategoria);
+  valorTotal.push(novaCategoria.valor);
+
+  const soma = valorTotal.reduce(
+    (acumulador, valorAtual) => acumulador + valorAtual,
+    0
+  );
+
+  console.log(soma);
+
+  console.log("Categoria adicionada");
 }
 adicionarCategoria();
+adicionarCategoria();
+
+console.log("Total de categorias:", categorias.length);
+console.log(categorias);
