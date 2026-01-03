@@ -19,39 +19,30 @@
 //salvar input na variavel categoria pelo id
 
 const prompt = require("readline-sync");
-let nomeCategoria = "";
-let valorCategoria = 0;
-let porcentagem = 0;
+
+let id = 0;
 let categorias = [];
 
-let valorTotal = [];
-let somaTotal = 0;
+console.log("CADASTRO DE CATEGORIAS");
 
-function adicionarCategoria() {
-  nomeCategoria = prompt.question("Nome categoria: \n");
-  valorCategoria = prompt.question("Digite o Valor: \n");
-  porcentagem = prompt.question("Qual é a porcentagem: \n");
+while (true) {
+  console.log(`\n--- Novo Registro (${categorias.length + 1}) ---`);
+  let categoria = {};
+  categoria.nome = prompt.question("Nome categoria: \n");
+  categoria.valor = Number(prompt.question("Digite o Valor: \n"));
+  categoria.porcentagem = Number(prompt.question("Qual é a porcentagem: \n"));
 
-  let novaCategoria = {
-    valor: valorCategoria,
-    categoria: nomeCategoria,
-    porcentagem: porcentagem,
-    id: crypto.randomUUID(),
-  };
-  categorias.push(novaCategoria);
-  valorTotal.push(novaCategoria.valor);
+  categorias.push(categoria);
+  console.log("Categoria adicionada com sucesso!");
 
-  const soma = valorTotal.reduce(
-    (acumulador, valorAtual) => acumulador + valorAtual,
-    0
-  );
-
-  console.log(soma);
-
-  console.log("Categoria adicionada");
+  const opcao = prompt
+    .question("Deseja cadastrar outro usuário?")
+    .toLowerCase();
+  if (opcao !== "sim") {
+    break;
+  }
 }
-adicionarCategoria();
-adicionarCategoria();
 
-console.log("Total de categorias:", categorias.length);
-console.log(categorias);
+console.log("\nRESUMO DOS DADOS!");
+console.log("Total de cadastros: " + categorias.length);
+console.table(categorias);
