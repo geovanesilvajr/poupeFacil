@@ -18,40 +18,27 @@
 
 //salvar input na variavel categoria pelo id
 
-const prompt = require("readline-sync");
-let nomeCategoria = "";
-let valorCategoria = 0;
-let porcentagem = 0;
-let categorias = [];
+const total = document.getElementById("total-value");
+const categorieName = document.getElementById("categorie-name");
+const totalValue = document.getElementById("total-value");
+const addBtn = document.getElementById("add-btn");
+const withdrawBtn = document.getElementById("withdraw-btn");
+const saveCategorieButton = document.getElementById("saveCategorieButton");
 
-let valorTotal = [];
-let somaTotal = 0;
+let categories = [];
+let totalAmount = 0;
 
-function adicionarCategoria() {
-  nomeCategoria = prompt.question("Nome categoria: \n");
-  valorCategoria = prompt.question("Digite o Valor: \n");
-  porcentagem = prompt.question("Qual é a porcentagem: \n");
+function saveCategorie() {
+  const name = categorieName.value;
+  const value = parseFloat(totalValue.value);
 
-  let novaCategoria = {
-    valor: valorCategoria,
-    categoria: nomeCategoria,
-    porcentagem: porcentagem,
-    id: crypto.randomUUID(),
-  };
-  categorias.push(novaCategoria);
-  valorTotal.push(novaCategoria.valor);
-
-  const soma = valorTotal.reduce(
-    (acumulador, valorAtual) => acumulador + valorAtual,
-    0
-  );
-
-  console.log(soma);
-
-  console.log("Categoria adicionada");
+  if (name && value) {
+    categories.push({ name, value });
+    updateCategoriesDisplay();
+  }
 }
-adicionarCategoria();
-adicionarCategoria();
 
-console.log("Total de categorias:", categorias.length);
-console.log(categorias);
+function updateCategoriesDisplay() {
+  const categoriesList = document.getElementById("categories-list");
+  categoriesList.innerHTML = "";
+}
