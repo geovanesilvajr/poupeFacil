@@ -24,21 +24,42 @@ const totalValue = document.getElementById("total-value");
 const addBtn = document.getElementById("add-btn");
 const withdrawBtn = document.getElementById("withdraw-btn");
 const saveCategorieButton = document.getElementById("saveCategorieButton");
+const categoriesList = document.getElementById("categories-list");
+const inputCategorie = document.getElementById("input-categorie");
+const inputAmount = document.getElementById("input-amount");
+const saveCategorieBtn = document.getElementById("saveCategorieBtn");
 
 let categories = [];
 let totalAmount = 0;
 
-function saveCategorie() {
-  const name = categorieName.value;
-  const value = parseFloat(totalValue.value);
+saveCategorieBtn.addEventListener("click", () => {
+  const name = inputCategorie.value;
+  const value = inputAmount.value;
 
-  if (name && value) {
-    categories.push({ name, value });
-    updateCategoriesDisplay();
+  if (name === "" || value === "") {
+    alert("Por favor, preencha os campos de categoria e valor.");
+    return;
   }
-}
+
+  const categorie = {
+    name: name,
+    value: Number(value),
+  };
+
+  categories.push(categorie);
+
+  updateCategoriesDisplay();
+
+  inputCategorie.value = "";
+  inputAmount.value = "";
+});
 
 function updateCategoriesDisplay() {
-  const categoriesList = document.getElementById("categories-list");
   categoriesList.innerHTML = "";
+
+  categories.forEach((categorie) => {
+    const li = document.createElement("li");
+    li.textContent = `${categorie.name}: R$ ${categorie.value.toFixed(2)}`;
+    categoriesList.appendChild(li);
+  });
 }
