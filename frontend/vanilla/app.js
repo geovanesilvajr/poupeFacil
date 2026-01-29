@@ -18,48 +18,58 @@
 
 //salvar input na variavel categoria pelo id
 
-const total = document.getElementById("total-value");
-const categorieName = document.getElementById("categorie-name");
-const totalValue = document.getElementById("total-value");
-const addBtn = document.getElementById("add-btn");
-const withdrawBtn = document.getElementById("withdraw-btn");
-const saveCategorieButton = document.getElementById("saveCategorieButton");
 const categoriesList = document.getElementById("categories-list");
-const inputCategorie = document.getElementById("input-categorie");
+const inputCategory = document.getElementById("input-category");
 const inputAmount = document.getElementById("input-amount");
-const saveCategorieBtn = document.getElementById("saveCategorieBtn");
+const saveCategoryBtn = document.getElementById("saveCategoryBtn");
+const textMessage = document.getElementById("text-message");
 
 let categories = [];
 let totalAmount = 0;
 
-saveCategorieBtn.addEventListener("click", () => {
-  const name = inputCategorie.value;
-  const value = inputAmount.value;
+saveCategoryBtn.addEventListener("click", () => {
+  const name = inputCategory.value;
+  const rawValue = inputAmount.value;
 
-  if (name === "" || value === "") {
+  if (name === "" || rawValue === "") {
     alert("Por favor, preencha os campos de categoria e valor.");
     return;
   }
 
-  const categorie = {
+  const value = parseFloat(rawValue);
+
+  if (isNaN(value) || value <= 0) {
+    alert("Por favor, insira um valor válido maior que zero.");
+    return;
+  }
+
+  const category = {
     name: name,
-    value: Number(value),
+    value: value,
   };
 
-  categories.push(categorie);
+  categories.push(category);
+
+  totalAmount += numericValue;
 
   updateCategoriesDisplay();
 
-  inputCategorie.value = "";
+  inputCategory.value = "";
   inputAmount.value = "";
+
+  textMessage.textContent = "Categoria salva com sucesso!";
 });
+setTimeout(() => {
+  textMessage.textContent = "";
+}, 3000);
+window.location.href = "index.html";
 
 function updateCategoriesDisplay() {
   categoriesList.innerHTML = "";
 
-  categories.forEach((categorie) => {
+  categories.forEach((category) => {
     const li = document.createElement("li");
-    li.textContent = `${categorie.name}: R$ ${categorie.value.toFixed(2)}`;
+    li.textContent = `${category.name}: R$ ${category.value}`;
     categoriesList.appendChild(li);
   });
 }
