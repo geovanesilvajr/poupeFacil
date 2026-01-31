@@ -18,58 +18,65 @@
 
 //salvar input na variavel categoria pelo id
 
+const savedCategoryBtn = document.getElementById("savedCategoryBtn");
+
+if (savedCategoryBtn) {
+  savedCategoryBtn.addEventListener("click", () => {
+    const inputCategory = document.getElementById("input-category");
+    const inputAmount = document.getElementById("input-amount");
+
+    const name = inputCategory.value;
+    const rawValue = inputAmount.value;
+
+    if (name === "" || rawValue === "") {
+      alert("Por favor, preencha os campos de categoria e valor.");
+      return;
+    }
+
+    const value = parseFloat(rawValue);
+
+    if (isNaN(value) || value <= 0) {
+      alert("Por favor, insira um valor válido maior que zero.");
+      return;
+    }
+
+    const category = {
+      name: name,
+      value: parseFloat(rawValue),
+    };
+
+    let savedCategories = JSON.parse(localStorage.getItem("categories")) || [];
+
+    savedCategories.push(category);
+
+    localStorage.setItem("categories", JSON.stringify(savedCategories));
+
+    inputCategory.value = "";
+    inputAmount.value = "";
+
+    window.location.href = "index.html";
+  });
+}
+
 const categoriesList = document.getElementById("categories-list");
-const inputCategory = document.getElementById("input-category");
-const inputAmount = document.getElementById("input-amount");
-const saveCategoryBtn = document.getElementById("saveCategoryBtn");
-const textMessage = document.getElementById("text-message");
 
-let categories = [];
-let totalAmount = 0;
+if (categoriesList) {
+  loadCategories();
+}
 
-saveCategoryBtn.addEventListener("click", () => {
-  const name = inputCategory.value;
-  const rawValue = inputAmount.value;
+function loadCategories() {
+  const data = localStorage.getItem("categories");
+  const categories = data ? JSON.parse(data) : [];
 
-  if (name === "" || rawValue === "") {
-    alert("Por favor, preencha os campos de categoria e valor.");
-    return;
-  }
-
-  const value = parseFloat(rawValue);
-
-  if (isNaN(value) || value <= 0) {
-    alert("Por favor, insira um valor válido maior que zero.");
-    return;
-  }
-
-  const category = {
-    name: name,
-    value: value,
-  };
-
-  categories.push(category);
-
-  totalAmount += numericValue;
-
-  updateCategoriesDisplay();
-
-  inputCategory.value = "";
-  inputAmount.value = "";
-
-  textMessage.textContent = "Categoria salva com sucesso!";
-});
-setTimeout(() => {
-  textMessage.textContent = "";
-}, 3000);
-window.location.href = "index.html";
-
-function updateCategoriesDisplay() {
   categoriesList.innerHTML = "";
 
   categories.forEach((category) => {
     const li = document.createElement("li");
-    li.textContent = `${category.name}: R$ ${category.value}`;
+    const formattedValue = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(category.value);
+    li.textContent = `${category.name}: ${formattedValue}`;
     categoriesList.appendChild(li);
   });
 }
