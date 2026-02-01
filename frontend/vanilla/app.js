@@ -91,9 +91,9 @@ function loadCategories() {
       style: "currency",
       currency: "BRL",
     }).format(category.value);
-    li.textContent = `${category.name}: ${formattedValue} ${formattedValue ? ` - ${((category.value / totalValue) * 100).toFixed(2)}%` : ""} `;
+    li.innerHTML += `<span class="category-name">${category.name}</span>: <span class="category-value">${formattedValue}</span> ${formattedValue ? ` - ${((category.value / totalValue) * 100).toFixed(2)}%` : ""} `;
     li.innerHTML += `<button onclick="deleteCategory('${category.name}')">X</button> `;
-    li.innerHTML += `<button onclick="editCategory('${category.name}')">Editar</button>`;
+    li.innerHTML += ` <button onclick="editCategory('${category.name}')">Editar</button>`;
     categoriesList.appendChild(li);
 
     totalValueDisplay.textContent = new Intl.NumberFormat("pt-BR", {
