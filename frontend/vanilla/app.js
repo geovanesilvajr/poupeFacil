@@ -50,6 +50,22 @@ if (categoriesList) {
   loadCategories();
 }
 
+function editCategory(categoryName) {
+  // Lógica para editar a categoria
+  const categoryValue = prompt("Insira o novo valor para a categoria:");
+  if (categoryValue !== null) {
+    let savedCategories = JSON.parse(localStorage.getItem("categories")) || [];
+    const categoryIndex = savedCategories.findIndex(
+      (category) => category.name === categoryName,
+    );
+    if (categoryIndex !== -1) {
+      savedCategories[categoryIndex].value = parseFloat(categoryValue);
+      localStorage.setItem("categories", JSON.stringify(savedCategories));
+      loadCategories();
+    }
+  }
+}
+
 //FUNÇÃO PARA DELETAR CATEGORIA
 function deleteCategory(categoryName) {
   let savedCategories = JSON.parse(localStorage.getItem("categories")) || [];
@@ -76,7 +92,8 @@ function loadCategories() {
       currency: "BRL",
     }).format(category.value);
     li.textContent = `${category.name}: ${formattedValue} ${formattedValue ? ` - ${((category.value / totalValue) * 100).toFixed(2)}%` : ""} `;
-    li.innerHTML += `<button onclick="deleteCategory('${category.name}')">X</button>`;
+    li.innerHTML += `<button onclick="deleteCategory('${category.name}')">X</button> `;
+    li.innerHTML += `<button onclick="editCategory('${category.name}')">Editar</button>`;
     categoriesList.appendChild(li);
 
     totalValueDisplay.textContent = new Intl.NumberFormat("pt-BR", {
