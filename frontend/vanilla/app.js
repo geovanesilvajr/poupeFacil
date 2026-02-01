@@ -81,7 +81,7 @@ function loadCategories() {
       style: "currency",
       currency: "BRL",
     }).format(category.value);
-    li.textContent = `${category.name}: ${formattedValue}`;
+    li.textContent = `${category.name}: ${formattedValue} ${formattedValue ? ` - ${((category.value / totalValue) * 100).toFixed(2)}%` : ""}`;
     categoriesList.appendChild(li);
 
     totalValueDisplay.textContent = new Intl.NumberFormat("pt-BR", {
