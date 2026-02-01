@@ -1,28 +1,9 @@
-//
-
-//valor total
-//adicionar categoria, adicionar porcentagem
-//mostrar categorias salvas com a porcentagem do total e valores
-//adicionar valor - fazer a conta de quanto vai ser destinado
-//  para cada categoria com base na conta ja feita anteriomente
-
-//categoria principal com valor total de 100% - ao adicionar nova categoria diminuir porcentagem e valor desta categoria principal
-//ao adicionar
-//adicionar categoria - input adicionar categoria -
-// guardar em um array de categorias com objeto - propriedade(categoria, porcentagem e id)
-//input - adicione o valor
-//mostrar divisão do valor para cada categoria
-//guardar total em uma variavel
-//mostrar na tela o valor salvo
-//loop para somar cada valor novo
-
-//salvar input na variavel categoria pelo id
-
 const savedCategoryBtn = document.getElementById("savedCategoryBtn");
 const totalValueDisplay = document.getElementById("total-value");
 
 let totalValue = 0;
 
+//LÓGICA DE ADICIONAR CATEGORIA
 if (savedCategoryBtn) {
   savedCategoryBtn.addEventListener("click", () => {
     const inputCategory = document.getElementById("input-category");
@@ -63,10 +44,23 @@ if (savedCategoryBtn) {
 
 const categoriesList = document.getElementById("categories-list");
 
+//LOGICA TELA INICIAL
+//FUNÇÃO PARA EXIBIR CATEGORIAS SALVAS
 if (categoriesList) {
   loadCategories();
 }
 
+//FUNÇÃO PARA DELETAR CATEGORIA
+function deleteCategory(categoryName) {
+  let savedCategories = JSON.parse(localStorage.getItem("categories")) || [];
+  savedCategories = savedCategories.filter(
+    (category) => category.name !== categoryName,
+  );
+  localStorage.setItem("categories", JSON.stringify(savedCategories));
+  loadCategories();
+}
+
+//FUNÇÃO PARA CARREGAR CATEGORIAS
 function loadCategories() {
   const data = localStorage.getItem("categories");
   const categories = data ? JSON.parse(data) : [];
@@ -81,7 +75,8 @@ function loadCategories() {
       style: "currency",
       currency: "BRL",
     }).format(category.value);
-    li.textContent = `${category.name}: ${formattedValue} ${formattedValue ? ` - ${((category.value / totalValue) * 100).toFixed(2)}%` : ""}`;
+    li.textContent = `${category.name}: ${formattedValue} ${formattedValue ? ` - ${((category.value / totalValue) * 100).toFixed(2)}%` : ""} `;
+    li.innerHTML += `<button onclick="deleteCategory('${category.name}')">X</button>`;
     categoriesList.appendChild(li);
 
     totalValueDisplay.textContent = new Intl.NumberFormat("pt-BR", {
