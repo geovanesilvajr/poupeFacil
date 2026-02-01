@@ -19,6 +19,9 @@
 //salvar input na variavel categoria pelo id
 
 const savedCategoryBtn = document.getElementById("savedCategoryBtn");
+const totalValueDisplay = document.getElementById("total-value");
+
+let totalValue = 0;
 
 if (savedCategoryBtn) {
   savedCategoryBtn.addEventListener("click", () => {
@@ -70,6 +73,8 @@ function loadCategories() {
 
   categoriesList.innerHTML = "";
 
+  totalValue = categories.reduce((sum, category) => sum + category.value, 0);
+
   categories.forEach((category) => {
     const li = document.createElement("li");
     const formattedValue = new Intl.NumberFormat("pt-BR", {
@@ -78,5 +83,10 @@ function loadCategories() {
     }).format(category.value);
     li.textContent = `${category.name}: ${formattedValue}`;
     categoriesList.appendChild(li);
+
+    totalValueDisplay.textContent = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(totalValue);
   });
 }
