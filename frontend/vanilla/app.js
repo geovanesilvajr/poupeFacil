@@ -50,11 +50,16 @@ if (categoriesList) {
   loadCategories();
 }
 
+//FUNÇÃO PARA EDITAR CATEGORIA
 function editCategory(categoryName) {
-  // Lógica para editar a categoria
   const categoryValue = prompt("Insira o novo valor para a categoria:");
   if (categoryValue !== null) {
     let savedCategories = JSON.parse(localStorage.getItem("categories")) || [];
+
+    if (isNaN(parseFloat(categoryValue)) || parseFloat(categoryValue) <= 0) {
+      alert("Por favor, insira um valor válido maior que zero.");
+      return;
+    }
     const categoryIndex = savedCategories.findIndex(
       (category) => category.name === categoryName,
     );
