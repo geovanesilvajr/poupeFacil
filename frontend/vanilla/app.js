@@ -107,3 +107,35 @@ function loadCategories() {
     }).format(totalValue);
   });
 }
+
+//Logica página de cadastro de usuário
+
+const cadastrarBtn = document.getElementById("cadastro-btn");
+
+if (cadastrarBtn) {
+  cadastrarBtn.addEventListener("click", () => {
+    const inputEmail = document.getElementById("cadastro-email");
+    const inputPassword = document.getElementById("cadastro-password");
+
+    const user = {
+      email: inputEmail.value,
+      password: inputPassword.value,
+    };
+
+    if (!user.email || !user.password) {
+      alert("Por favor, preencha todos os campos.");
+      return;
+    }
+
+    let savedUsers = JSON.parse(localStorage.getItem("User added")) || [];
+
+    savedUsers.push(user);
+
+    localStorage.setItem("User added", JSON.stringify(savedUsers));
+
+    inputEmail.value = "";
+    inputPassword.value = "";
+
+    window.location.href = "login.html";
+  });
+}
