@@ -1,3 +1,9 @@
+const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+if (!loggedInUser) {
+  window.location.href = "login.html";
+}
+
 const savedCategoryBtn = document.getElementById("savedCategoryBtn");
 const totalValueDisplay = document.getElementById("total-value");
 
@@ -109,11 +115,11 @@ function loadCategories() {
 }
 
 //Logica página de cadastro de usuário
-
 const cadastrarBtn = document.getElementById("cadastro-btn");
 
 if (cadastrarBtn) {
-  cadastrarBtn.addEventListener("click", () => {
+  cadastrarBtn.addEventListener("click", (event) => {
+    event.preventDefault();
     const inputEmail = document.getElementById("cadastro-email");
     const inputPassword = document.getElementById("cadastro-password");
 
@@ -137,5 +143,33 @@ if (cadastrarBtn) {
     inputPassword.value = "";
 
     window.location.href = "login.html";
+  });
+}
+
+//Logica página de login de usuário
+const loginBtn = document.getElementById("login-btn");
+
+if (loginBtn) {
+  loginBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    const inputEmail = document.getElementById("login-email");
+    const inputPassword = document.getElementById("login-password");
+
+    const email = inputEmail.value;
+    const password = inputPassword.value;
+
+    let savedUsers = JSON.parse(localStorage.getItem("User added")) || [];
+
+    const user = savedUsers.find(
+      (user) => user.email === email && user.password === password,
+    );
+
+    if (user) {
+      localStorage.setItem("loggedInUser", JSON.stringify(user));
+
+      window.location.href = "index.html";
+    } else {
+      alert("Email ou senha incorretos.");
+    }
   });
 }
