@@ -178,3 +178,23 @@ if (loginBtn) {
     }
   });
 }
+
+//Pagina logOut
+const logoutBtn = document.getElementById("logout-btn");
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", () => {
+    console.log("Logout button clicked");
+
+    localStorage.removeItem("loggedInUser");
+    window.location.href = "login.html";
+  });
+}
+
+//Mostrar email do usuário logado na página de perfil
+const userEmailDisplay = document.getElementById("user-email");
+if (userEmailDisplay) {
+  const loggedUser = JSON.parse(localStorage.getItem("loggedInUser"));
+  if (loggedUser) {
+    userEmailDisplay.textContent = loggedUser.email;
+  }
+}
