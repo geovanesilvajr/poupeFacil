@@ -1,9 +1,3 @@
-const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-
-if (!loggedInUser) {
-  window.location.href = "login.html";
-}
-
 const savedCategoryBtn = document.getElementById("savedCategoryBtn");
 const totalValueDisplay = document.getElementById("total-value");
 
@@ -35,11 +29,19 @@ if (savedCategoryBtn) {
       value: parseFloat(rawValue),
     };
 
-    let savedCategories = JSON.parse(localStorage.getItem("categories")) || [];
+    const loggedUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (!loggedUser) {
+      window.location.href = "login.html";
+      return;
+    }
+
+    const keyOfUser = `categories_${loggedUser.email}`;
+
+    let savedCategories = JSON.parse(localStorage.getItem(keyOfUser)) || [];
 
     savedCategories.push(category);
 
-    localStorage.setItem("categories", JSON.stringify(savedCategories));
+    localStorage.setItem(keyOfUser, JSON.stringify(savedCategories));
 
     inputCategory.value = "";
     inputAmount.value = "";
@@ -89,7 +91,10 @@ function deleteCategory(categoryName) {
 
 //FUNÇÃO PARA CARREGAR CATEGORIAS
 function loadCategories() {
-  const data = localStorage.getItem("categories");
+  const loggedUser = JSON.parse(localStorage.getItem("loggedInUser"));
+  if (!loggedUser) return;
+  const keyOfUser = `categories_${loggedUser.email}`;
+  const data = localStorage.getItem(keyOfUser);
   const categories = data ? JSON.parse(data) : [];
 
   categoriesList.innerHTML = "";
