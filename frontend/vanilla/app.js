@@ -3,6 +3,15 @@ const totalValueDisplay = document.getElementById("total-value");
 
 let totalValue = 0;
 
+//Função para saber a chave do usuário atual
+function getUserKey(suffix) {
+  const loggedUser = JSON.parse(localStorage.getItem("loggedInUser"));
+  if (!loggedUser) {
+    return null;
+  }
+  return `categories_${loggedUser.email}_${suffix}`;
+}
+
 //LÓGICA DE ADICIONAR CATEGORIA
 if (savedCategoryBtn) {
   savedCategoryBtn.addEventListener("click", () => {
@@ -62,7 +71,10 @@ if (categoriesList) {
 function editCategory(categoryName) {
   const categoryValue = prompt("Insira o novo valor para a categoria:");
   if (categoryValue !== null) {
-    let savedCategories = JSON.parse(localStorage.getItem("categories")) || [];
+    const loggedUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (!loggedUser) return;
+    const keyOfUser = `categories_${loggedUser.email}`;
+    let savedCategories = JSON.parse(localStorage.getItem(keyOfUser)) || [];
 
     if (isNaN(parseFloat(categoryValue)) || parseFloat(categoryValue) <= 0) {
       alert("Por favor, insira um valor válido maior que zero.");
@@ -73,7 +85,7 @@ function editCategory(categoryName) {
     );
     if (categoryIndex !== -1) {
       savedCategories[categoryIndex].value = parseFloat(categoryValue);
-      localStorage.setItem("categories", JSON.stringify(savedCategories));
+      localStorage.setItem(keyOfUser, JSON.stringify(savedCategories));
       loadCategories();
     }
   }
@@ -81,11 +93,14 @@ function editCategory(categoryName) {
 
 //FUNÇÃO PARA DELETAR CATEGORIA
 function deleteCategory(categoryName) {
-  let savedCategories = JSON.parse(localStorage.getItem("categories")) || [];
+  const loggedUser = JSON.parse(localStorage.getItem("loggedInUser"));
+  if (!loggedUser) return;
+  const keyOfUser = `categories_${loggedUser.email}`;
+  let savedCategories = JSON.parse(localStorage.getItem(keyOfUser)) || [];
   savedCategories = savedCategories.filter(
     (category) => category.name !== categoryName,
   );
-  localStorage.setItem("categories", JSON.stringify(savedCategories));
+  localStorage.setItem(keyOfUser, JSON.stringify(savedCategories));
   loadCategories();
 }
 
@@ -117,6 +132,56 @@ function loadCategories() {
       currency: "BRL",
     }).format(totalValue);
   });
+}
+
+//Input valor atual no banco
+const bankValueInput = document.getElementById("bank-value-input");
+const saveBankValueBtn = document.getElementById("save-bank-value-btn");
+const currentBankValueDisplay = document.getElementById("current-bank-value");
+const currentDifferenceValueDisplay = document.getElementById(
+  "current-difference-value",
+);
+function currentBankValue() {
+  const bankValue = parseFloat(bankValueInput.value);
+
+  const loggedUser = JSON.parse(localStorage.getItem("loggedInUser"));
+  if (!loggedUser) return;
+  const keyOfUser = `categories_${loggedUser.email}`;
+
+  let currentBankValue = localStorage.getItem(keyOfUser + "_currentBankValue");
+  if (currentBankValue) {
+    currentBankValue = parseFloat(currentBankValue);
+  } else {
+    currentBankValue = 0;
+  }
+  localStorage.setItem(keyOfUser + "_currentBankValue", bankValue.toString());
+
+  const savedValue = localStorage.getItem(keyOfUser + "_currentBankValue");
+
+  if (savedValue !== null && !isNaN(savedValue)) {
+    currentBankValueDisplay.textContent = `Valor Atual no Banco: ${new Intl.NumberFormat(
+      "pt-BR",
+      {
+        style: "currency",
+        currency: "BRL",
+      },
+    ).format(savedValue)}`;
+
+    const differenceValue = totalValue - savedValue;
+    currentDifferenceValueDisplay.textContent = `Saldo a Poupar: ${new Intl.NumberFormat(
+      "pt-BR",
+      {
+        style: "currency",
+        currency: "BRL",
+      },
+    ).format(differenceValue)}`;
+  } else {
+    alert("Por favor, insira um valor válido para o banco.");
+  }
+}
+
+if (saveBankValueBtn) {
+  saveBankValueBtn.addEventListener("click", currentBankValue);
 }
 
 //Logica página de cadastro de usuário
@@ -182,7 +247,8 @@ if (loginBtn) {
 //Pagina logOut
 const logoutBtn = document.getElementById("logout-btn");
 if (logoutBtn) {
-  logoutBtn.addEventListener("click", () => {
+  logoutBtn.addEventListener("click", (event) => {
+    event.preventDefault();
     console.log("Logout button clicked");
 
     localStorage.removeItem("loggedInUser");

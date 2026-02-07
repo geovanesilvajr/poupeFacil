@@ -20,9 +20,18 @@
 
       <!-- ================= MAIN ================= -->
       <main class="container-info">
+        <!-- Input Valor atual no banco-->
+         <div class="categories-section">
+         <span>Digite o valor atual no banco:</span>
+         <input type="number" id="bank-value-input" placeholder="R$ 0,00" />
+          <button id="save-bank-value-btn">Salvar</button>
+          <h3 id="current-bank-value">Valor Atual no Banco: R$ 0,00</h3>
+          <span id="current-difference-value">Saldo a Poupar: R$ 0,00</span>
+          </div>
+
         <!-- ===== SALDO TOTAL ===== -->
         <div class="total-section">
-          <h2 class="total-title">Saldo Total -  <span id="total-value"></span></h2>
+          <h2 class="total-title">Saldo Total -  <span id="total-value">R$ 0,00</span></h2>
           </div>
 
         <!-- ===== METAS ===== -->
