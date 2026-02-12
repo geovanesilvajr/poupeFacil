@@ -1,19 +1,22 @@
+import Header from "./components/Header";
+
 import "./App.css";
-import { useState } from "react";
 
 function App() {
-  const [message, setMessage] = useState("Hello World");
-
   return (
-    <>
-      <h1 className="text-3xl font-bold underline text-center">{message}</h1>
-      <button
-        className="  bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded block mx-auto mt-4"
-        onClick={() => setMessage("Hello React!")}
-      >
-        Click me
-      </button>
-    </>
+    <div className="App min-h-screen bg-gray-100">
+      <Header />
+      <main className="p-4">
+        <h2 className="text-2xl font-semibold mb-4">
+          Bem-vindo ao PoupeFácil!
+        </h2>
+        <p className="text-gray-700">
+          Gerencie suas finanças de forma simples e eficiente. Acompanhe seus
+          gastos, defina metas de economia e visualize gráficos para entender
+          melhor seu comportamento financeiro.
+        </p>
+      </main>
+    </div>
   );
 }
 
